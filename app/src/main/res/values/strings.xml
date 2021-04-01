@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name" translatable="false">HearMeWhenYouCanNotSeeMe</string>
+
+    <string name="no_camera_access">Please grant camera permissions.</string>
+    <string name="launchMP">Launch Mediapipe</string>
+    <string name="changeLang">Change Language</string>
+    <string name="out_message">Run MP for recognition</string>
+</resources>

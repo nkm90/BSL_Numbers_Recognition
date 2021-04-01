@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_camera_access">Please, provide permissions to use the camera</string>
+    <string name="launchMP">Start hand tracker</string>
+    <string name="changeLang">Change language</string>
+    <string name="out_message">Press Start  button to obtain a message using Hand recognition</string>
+</resources>
