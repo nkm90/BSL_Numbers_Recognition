@@ -14,4 +14,5 @@
     <string name="eight">Ocho</string>
     <string name="nine">Nueve</string>
     <string name="thanks">Gracias por usar my app</string>
+    <string name="noHands" >Ninguna mano detectada</string>
 </resources>

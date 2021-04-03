@@ -98,7 +98,7 @@ public class MediaPipeActivity extends BasicActivity {
      */
     private String getMultiHandLandmarksDebugString(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
-            return "No hand landmarks";
+            return getResources().getString(R.string.noHands);
         }
         String multiHandLandmarksStr = "Number of hands detected: " + multiHandLandmarks.size() + "\n";
         int handIndex = 0;
@@ -280,5 +280,56 @@ public class MediaPipeActivity extends BasicActivity {
 
     private int radianToDegree(double radian) {
         return (int) Math.floor(radian * 180. / Math.PI + 0.5);
+    }
+
+    /*LIFECYCLE INTEGRATION
+    * With the aim of keeping track of the different states that this activity is changing.
+    * I just basically logs a message to the console as no other function is needed in this case*/
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - onSaveInstanceState()");
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Start");
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Restart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Resume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Pause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Stop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - Destroy");
+        super.onDestroy();
     }
 }
