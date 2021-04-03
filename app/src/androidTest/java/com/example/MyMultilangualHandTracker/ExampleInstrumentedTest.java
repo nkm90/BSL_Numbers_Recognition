@@ -1,4 +1,4 @@
-package com.example.HearMeWhenYouCanNotSeeMe;
+package com.example.MyMultilangualHandTracker;
 
 import android.content.Context;
 
