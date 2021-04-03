@@ -4,4 +4,13 @@
     <string name="launchMP">Iniciar el reconocedor de manos</string>
     <string name="changeLang">Cambiar idioma</string>
     <string name="out_message">Presiona el boton de Iniciar para obtener el mensaje utilizando el reconocedor de signos</string>
+    <string name="one">Uno</string>
+    <string name="two">Dos</string>
+    <string name="three">Tres</string>
+    <string name="four">Cuatro</string>
+    <string name="five">Cinco</string>
+    <string name="six">Seis</string>
+    <string name="seven">Siete</string>
+    <string name="eight">Ocho</string>
+    <string name="nine">Nueve</string>
 </resources>

@@ -123,6 +123,17 @@ public class MediaPipeActivity extends BasicActivity {
         }
         return multiHandLandmarksStr;
     }
+    /**
+     * When the back button is pressed, we return the message "Back" to the menu
+     * and close the activity.
+     */
+    @Override
+    public void onBackPressed() {
+        Intent backIntent = new Intent();
+        backIntent.putExtra("MESSAGE", "Back");
+        setResult(1, backIntent);
+        finish();
+    }
 
     private String handGestureCalculator(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
@@ -198,27 +209,28 @@ public class MediaPipeActivity extends BasicActivity {
 
             // Hand gesture recognition based on the position of the fingers
 
+            String number;
             if (thumbIsOpen){
                 if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp){
-                    return "FIVE";
+                    return getResources().getString(R.string.five);
                 }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightDown){
-                    return "NINE";
+                    return getResources().getString(R.string.nine);
                 }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
-                    return "EIGHT";
+                    return getResources().getString(R.string.eight);
                 }else if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
-                    return "SEVEN";
+                    return getResources().getString(R.string.seven);
                 }else {
-                    return "SIX";
+                    return getResources().getString(R.string.six);
                 }
             } else if (thumbIsBend){
                 if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
-                    return "ONE";
+                    return getResources().getString(R.string.one);
                 }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
-                    return "TWO";
+                    return getResources().getString(R.string.two);
                 }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightDown){
-                    return "THREE";
+                    return getResources().getString(R.string.three);
                 }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp){
-                    return "FOUR";
+                    return getResources().getString(R.string.four);
                 }
             }
             else {

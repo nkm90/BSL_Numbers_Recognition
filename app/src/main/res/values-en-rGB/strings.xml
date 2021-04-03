@@ -4,4 +4,13 @@
     <string name="launchMP">Start hand tracker</string>
     <string name="changeLang">Change language</string>
     <string name="out_message">Press Start  button to obtain a message using Hand recognition</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
+    <string name="four">Four</string>
+    <string name="five">Five</string>
+    <string name="six">Six</string>
+    <string name="seven">Seven</string>
+    <string name="eight">Eight</string>
+    <string name="nine">Nine</string>
 </resources>
