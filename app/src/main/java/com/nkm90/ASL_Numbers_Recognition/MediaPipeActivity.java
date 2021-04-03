@@ -37,19 +37,24 @@ public class MediaPipeActivity extends BasicActivity {
 
     private static final String TAG = "MediaPipeActivity";
     private static final String OUTPUT_LANDMARKS_STREAM_NAME = "multi_hand_landmarks";
-    private static final String OUTPUT_HAND_RECT = "multi_hand_rects";
     private List<NormalizedLandmarkList> multiHandLandmarks;
 
     private TextView gesture;
-    private TextView moveGesture;
     private TextView result;
+    private long timestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gesture = findViewById(R.id.gesture);
-        moveGesture = findViewById(R.id.move_gesture);
         result = findViewById(R.id.resultString);
+        timestamp = System.currentTimeMillis();
+
+        /**
+         * When the result TextView area is pressed, the String thanks is stored
+         * as message, passed back to the onActivityResult, and closing the
+         * current Activity
+         */
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +82,11 @@ public class MediaPipeActivity extends BasicActivity {
                         @Override
                         public void run() {
                             gesture.setText(handGestureCalculator(multiHandLandmarks));
+                            String letter = handGestureCalculator(multiHandLandmarks);
+                            if (timestamp + 2000 < System.currentTimeMillis() && !letter.equals(getResources().getString(R.string.noHands)) && !letter.equals("no gesture")){
+                                result.setText(letter);
+                                timestamp = System.currentTimeMillis();
+                            }
                         }
                     });
                     Log.d(
@@ -125,7 +135,7 @@ public class MediaPipeActivity extends BasicActivity {
     }
 
     /**
-     * When the back button is pressed, we return the message "Back" to the menu
+     * When the back button is pressed, we return the message thanks form the strings.xml to the menu
      * and close the activity.
      */
     @Override
@@ -138,7 +148,7 @@ public class MediaPipeActivity extends BasicActivity {
 
     private String handGestureCalculator(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
-            return "No hand detected";
+            return getResources().getString(R.string.noHands);
         }
         boolean thumbIsOpen = false;
         boolean thumbIsBend = false;
@@ -154,7 +164,10 @@ public class MediaPipeActivity extends BasicActivity {
         for (NormalizedLandmarkList landmarks : multiHandLandmarks) {
             List<NormalizedLandmark> landmarkList = landmarks.getLandmarkList();
 
-            Log.d("Foot", "" + landmarkList.get(0).getY() + " " + landmarkList.get(1).getY() + " " + landmarkList.get(20).getY());
+            //Logging to the console the X-axis points that make the base of the palm and do not move like the ones on the fingers
+            Log.d("Palm base", "" + landmarkList.get(0).getX() + " " + landmarkList.get(1).getX() + " " + landmarkList.get(2).getX() + " " + landmarkList.get(17).getX());
+            //Logging to the console the Y-axis points that make the base of the palm and do not move like the ones on the fingers
+            Log.d("Palm base", "" + landmarkList.get(0).getY() + " " + landmarkList.get(1).getY() + " " + landmarkList.get(2).getY() + " " + landmarkList.get(17).getY());
 
             /* FINGERS CONDITIONS
              * To identify when a finger is straight up or straight down.
@@ -209,8 +222,6 @@ public class MediaPipeActivity extends BasicActivity {
             }
 
             // Hand gesture recognition based on the position of the fingers
-
-            String number;
             if (thumbIsOpen){
                 if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp){
                     return getResources().getString(R.string.five);
@@ -218,9 +229,17 @@ public class MediaPipeActivity extends BasicActivity {
                     return getResources().getString(R.string.nine);
                 }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
                     return getResources().getString(R.string.eight);
-                }else if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
+                }else if (radianToDegree(getAngleABC(landmarkList.get(4).getX(), landmarkList.get(4).getY(),
+                        landmarkList.get(2).getX(), landmarkList.get(2).getY(),
+                        landmarkList.get(8).getX(),landmarkList.get(8).getX())) >= 65//1.0210176124167 radians
+                        && indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown
+                        || landmarkList.get(2).getX() > landmarkList.get(17).getX() && // the hand is left
+                        radianToDegree(getAngleABC(landmarkList.get(4).getX(), landmarkList.get(4).getY(),
+                        landmarkList.get(2).getX(), landmarkList.get(2).getY(),
+                        landmarkList.get(8).getX(),landmarkList.get(8).getX())) <= 65 //1.0210176124167 radians
+                        && indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
                     return getResources().getString(R.string.seven);
-                }else {
+                }else  if (indexStraightDown && middleStraightDown && ringStraightDown && pinkyStraightDown){
                     return getResources().getString(R.string.six);
                 }
             } else if (thumbIsBend){
@@ -235,6 +254,7 @@ public class MediaPipeActivity extends BasicActivity {
                 }
             }
             else {
+                //When different position is found, the fingers positions conditions are logged on the console
                 String info = "thumbIsOpen " + thumbIsOpen + ", thumbIsBend " + thumbIsBend
                         + ", indexStraightUp " + indexStraightUp + ", indexStraightDown " + indexStraightDown
                         + ", middleStraightUp " + middleStraightUp + ", middleStraightDown " + middleStraightDown
@@ -245,10 +265,6 @@ public class MediaPipeActivity extends BasicActivity {
             }
         }
         return " "; // nothing is displayed on the screen
-    }
-    private boolean isThumbNearFirstFinger(LandmarkProto.NormalizedLandmark point1, LandmarkProto.NormalizedLandmark point2) {
-        double distance = getEuclideanDistanceAB(point1.getX(), point1.getY(), point2.getX(), point2.getY());
-        return distance < 0.1;
     }
 
     /**
@@ -266,6 +282,19 @@ public class MediaPipeActivity extends BasicActivity {
         return Math.sqrt(dist);
     }
 
+    /**
+     * This method calculates the angle between 3 given points (A,B,C) using the angle between vectors
+     * formula. The vector 1 is made with points AB and vector 2 is made with points BC, being point B
+     * the vertex.
+     *
+     * @param a_x Value of X for the given position of A
+     * @param a_y Value of Y for the given position of A
+     * @param b_x Value of X for the given position of B
+     * @param b_y Value of Y for the given position of B
+     * @param c_x Value of X for the given position of C
+     * @param c_y Value of Y for the given position of C
+     * @return Angle in radians
+     */
     private double getAngleABC(double a_x, double a_y, double b_x, double b_y, double c_x, double c_y) {
         double ab_x = b_x - a_x;
         double ab_y = b_y - a_y;
@@ -278,6 +307,11 @@ public class MediaPipeActivity extends BasicActivity {
         return Math.atan2(cross, dot);
     }
 
+    /**
+     * Method to convert radian to degree based on the formula
+     * @param radian Value of radians to convert
+     * @return Angle in degrees
+     */
     private int radianToDegree(double radian) {
         return (int) Math.floor(radian * 180. / Math.PI + 0.5);
     }
@@ -288,7 +322,7 @@ public class MediaPipeActivity extends BasicActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - onSaveInstanceState()");
+        Log.d("ActivityLifeCycle", "MediaPipe Activity - SaveInstanceState");
     }
 
     @Override
