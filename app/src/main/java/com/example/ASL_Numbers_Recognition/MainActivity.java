@@ -1,4 +1,4 @@
-package com.example.MyMultilangualHandTracker;
+package com.example.ASL_Numbers_Recognition;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;

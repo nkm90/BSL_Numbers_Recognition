@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">My Multilangual Hand Tracker</string>
+    <string name="app_name" translatable="false">ASL Numbers Recognition</string>
 
     <string name="no_camera_access">Please grant camera permissions.</string>
     <string name="launchMP">Launch Mediapipe</string>
