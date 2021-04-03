@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="no_camera_access" translatable="false">Por favor, autorice el acceso a la camara</string>
+    <string name="no_camera_access">Por favor, autorice el acceso a la camara</string>
     <string name="launchMP">Iniciar el reconocedor de manos</string>
     <string name="changeLang">Cambiar idioma</string>
     <string name="out_message">Presiona el boton de Iniciar para obtener el mensaje utilizando el reconocedor de signos</string>
@@ -13,4 +13,5 @@
     <string name="seven">Siete</string>
     <string name="eight">Ocho</string>
     <string name="nine">Nueve</string>
+    <string name="thanks">Gracias por usar my app</string>
 </resources>

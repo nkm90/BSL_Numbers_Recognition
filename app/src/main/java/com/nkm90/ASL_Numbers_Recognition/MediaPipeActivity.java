@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.example.ASL_Numbers_Recognition;
+package com.nkm90.ASL_Numbers_Recognition;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.ASL_Numbers_Recognition.basic.BasicActivity;
+import com.nkm90.ASL_Numbers_Recognition.basic.BasicActivity;
 import com.google.mediapipe.formats.proto.LandmarkProto;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
@@ -53,7 +53,7 @@ public class MediaPipeActivity extends BasicActivity {
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = result.getText().toString();
+                String message = getResources().getString(R.string.thanks);
                 Intent intent = new Intent();
                 intent.putExtra("MESSAGE", message);
                 setResult(1, intent);
@@ -123,6 +123,7 @@ public class MediaPipeActivity extends BasicActivity {
         }
         return multiHandLandmarksStr;
     }
+
     /**
      * When the back button is pressed, we return the message "Back" to the menu
      * and close the activity.
@@ -130,7 +131,7 @@ public class MediaPipeActivity extends BasicActivity {
     @Override
     public void onBackPressed() {
         Intent backIntent = new Intent();
-        backIntent.putExtra("MESSAGE", "Back");
+        backIntent.putExtra("MESSAGE", getResources().getString(R.string.thanks));
         setResult(1, backIntent);
         finish();
     }
