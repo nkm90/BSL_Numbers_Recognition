@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -109,5 +110,56 @@ public class MainActivity extends AppCompatActivity {
             String message = data.getStringExtra("MESSAGE");
             resultView.setText(message);
         }
+    }
+
+    /*LIFECYCLE INTEGRATION
+     * With the aim of keeping track of the different states that this activity is changing.
+     * I just basically logs a message to the console as no other function is needed in this case*/
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("ActivityLifeCycle", "Main Activity - onSaveInstanceState()");
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        Log.d("ActivityLifeCycle", "Main Activity - onStart");
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        Log.d("ActivityLifeCycle", "Main Activity - onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume()
+    {
+        Log.d("ActivityLifeCycle", "Main Activity - onResume");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause()
+    {
+        Log.d("ActivityLifeCycle", "Main Activity - onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        Log.d("ActivityLifeCycle", "Main Activity - onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        Log.d("ActivityLifeCycle", "Main Activity - onDestroy");
+        super.onDestroy();
     }
 }
