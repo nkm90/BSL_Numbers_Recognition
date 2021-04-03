@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ASL_Numbers_Recognition">
+    package="com.nkm90.ASL_Numbers_Recognition">
     <!-- For using the camera -->
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -14,14 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.ASL_Numbers_Recognition.MainActivity">
+        <activity android:name="com.nkm90.ASL_Numbers_Recognition.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.ASL_Numbers_Recognition.MediaPipeActivity">
+        <activity android:name="com.nkm90.ASL_Numbers_Recognition.MediaPipeActivity">
 
         </activity>
 
