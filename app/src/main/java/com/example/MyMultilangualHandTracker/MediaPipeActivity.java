@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.example.HearMeWhenYouCanNotSeeMe;
+package com.example.MyMultilangualHandTracker;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.HearMeWhenYouCanNotSeeMe.basic.BasicActivity;
+import com.example.MyMultilangualHandTracker.basic.BasicActivity;
 import com.google.mediapipe.formats.proto.LandmarkProto;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
@@ -88,6 +88,14 @@ public class MediaPipeActivity extends BasicActivity {
                 });
     }
 
+    /**
+     * The getMultiHandLandmarksDebugString method helps building a readable String for the
+     * debugger, keeping track of the different points positions obtained from the multiHandLandmarks
+     * of MediaPipe.
+     *
+     * @param multiHandLandmarks
+     * @return the list of points with their respective X, Y and Z positions for each hand recognised
+     */
     private String getMultiHandLandmarksDebugString(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
             return "No hand landmarks";
@@ -136,11 +144,11 @@ public class MediaPipeActivity extends BasicActivity {
 
             Log.d("Foot", "" + landmarkList.get(0).getY() + " " + landmarkList.get(1).getY() + " " + landmarkList.get(20).getY());
 
-            float pseudoFixKeyPoint;
             /* FINGERS CONDITIONS
              * To identify when a finger is straight up or straight down.
-             * Each of the following conditions allowed me to create the state straightUp on each finger.
-             * INDEX_FINGER */
+             * Each of the following conditions allowed me to create the state straightUp on each finger.*/
+
+            /*INDEX_FINGER*/
             if (landmarkList.get(8).getY() < landmarkList.get(7).getY()
                     && landmarkList.get(7).getY() < landmarkList.get(6).getY()
                     && landmarkList.get(6).getY() < landmarkList.get(5).getY()){
@@ -149,6 +157,7 @@ public class MediaPipeActivity extends BasicActivity {
                     getEuclideanDistanceAB(landmarkList.get(5).getX(),landmarkList.get(5).getY(), landmarkList.get(0).getX(), landmarkList.get(0).getY())){
                 indexStraightDown = true;
             }
+
             /*MIDDLE_FINGER */
             if (landmarkList.get(12).getY() < landmarkList.get(11).getY()
                     && landmarkList.get(11).getY() < landmarkList.get(10).getY()
@@ -158,6 +167,7 @@ public class MediaPipeActivity extends BasicActivity {
                     getEuclideanDistanceAB(landmarkList.get(9).getX(),landmarkList.get(9).getY(), landmarkList.get(0).getX(), landmarkList.get(0).getY())){
                 middleStraightDown = true;
             }
+
             /*RING_FINGER */
             if (landmarkList.get(16).getY() < landmarkList.get(15).getY()
                     && landmarkList.get(15).getY() < landmarkList.get(14).getY()
@@ -167,6 +177,7 @@ public class MediaPipeActivity extends BasicActivity {
                     getEuclideanDistanceAB(landmarkList.get(13).getX(),landmarkList.get(13).getY(), landmarkList.get(0).getX(), landmarkList.get(0).getY())){
                 ringStraightDown = true;
             }
+
             /*PINKY_FINGER */
             if (landmarkList.get(20).getY() < landmarkList.get(19).getY()
                     && landmarkList.get(19).getY() < landmarkList.get(18).getY()
@@ -176,36 +187,39 @@ public class MediaPipeActivity extends BasicActivity {
                     getEuclideanDistanceAB(landmarkList.get(17).getX(),landmarkList.get(17).getY(), landmarkList.get(0).getX(), landmarkList.get(0).getY())){
                 pinkyStraightDown = true;
             }
+
             /*THUMB */
-            pseudoFixKeyPoint = landmarkList.get(4).getX();
-            if (getEuclideanDistanceAB(pseudoFixKeyPoint,landmarkList.get(4).getY(), landmarkList.get(9).getX(), landmarkList.get(9).getY()) <=
-                    getEuclideanDistanceAB(pseudoFixKeyPoint,landmarkList.get(4).getY(), landmarkList.get(2).getX(), landmarkList.get(2).getY()) &&
-                    landmarkList.get(4).getY() >= landmarkList.get(3).getY()){
+            if (getEuclideanDistanceAB(landmarkList.get(4).getX(),landmarkList.get(4).getY(), landmarkList.get(9).getX(), landmarkList.get(9).getY())
+                    < getEuclideanDistanceAB(landmarkList.get(3).getX(),landmarkList.get(3).getY(), landmarkList.get(9).getX(), landmarkList.get(9).getY())){
                 thumbIsBend = true;
             }else {
                 thumbIsOpen = true;
             }
 
-            // Hand gesture recognition
-            if (thumbIsOpen && indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp)
-            {
-                return "FIVE";
-            }
-            else if (thumbIsBend && indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp)
-            {
-                return "FOUR";
-            }
-            else if (thumbIsOpen && indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown)
-            {
-                return "TREE";
-            }
-            else if (thumbIsOpen && indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown)
-            {
-                return "TWO";
-            }
-            else if (!thumbIsOpen && indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown)
-            {
-                return "ONE";
+            // Hand gesture recognition based on the position of the fingers
+
+            if (thumbIsOpen){
+                if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp){
+                    return "FIVE";
+                }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightDown){
+                    return "NINE";
+                }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
+                    return "EIGHT";
+                }else if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
+                    return "SEVEN";
+                }else {
+                    return "SIX";
+                }
+            } else if (thumbIsBend){
+                if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
+                    return "ONE";
+                }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
+                    return "TWO";
+                }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightDown){
+                    return "THREE";
+                }else if (indexStraightUp && middleStraightUp && ringStraightUp && pinkyStraightUp){
+                    return "FOUR";
+                }
             }
             else {
                 String info = "thumbIsOpen " + thumbIsOpen + ", thumbIsBend " + thumbIsBend
@@ -214,16 +228,26 @@ public class MediaPipeActivity extends BasicActivity {
                         + ", ringStraightUp " + ringStraightUp + ", ringStraightDown " + ringStraightDown
                         + ", pinkyStraightUp " + pinkyStraightUp + ", pinkyStraightDown " + pinkyStraightDown;
                 Log.d(TAG, "handGestureCalculator: == " + info);
-                return " ";
+                return " "; // nothing is displayed on the screen
             }
         }
-        return " ";
+        return " "; // nothing is displayed on the screen
     }
     private boolean isThumbNearFirstFinger(LandmarkProto.NormalizedLandmark point1, LandmarkProto.NormalizedLandmark point2) {
         double distance = getEuclideanDistanceAB(point1.getX(), point1.getY(), point2.getX(), point2.getY());
         return distance < 0.1;
     }
 
+    /**
+     * The following method calculates the distance between 2 points (A and B) using euclidean distance
+     * formula.
+     *
+     * @param a_x Value of X for the given position of point A
+     * @param a_y Value of Y for the given position of point A
+     * @param b_x Value of X for the given position of point B
+     * @param b_y Value of Y for the given position of point B
+     * @return Euclidean distance result
+     */
     private double getEuclideanDistanceAB(double a_x, double a_y, double b_x, double b_y) {
         double dist = Math.pow(a_x - b_x, 2) + Math.pow(a_y - b_y, 2);
         return Math.sqrt(dist);
