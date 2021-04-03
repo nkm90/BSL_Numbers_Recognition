@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.example.MyMultilangualHandTracker;
+package com.example.ASL_Numbers_Recognition;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -22,7 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.MyMultilangualHandTracker.basic.BasicActivity;
+import com.example.ASL_Numbers_Recognition.basic.BasicActivity;
 import com.google.mediapipe.formats.proto.LandmarkProto;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
