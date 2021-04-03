@@ -53,7 +53,7 @@ public class MediaPipeActivity extends BasicActivity {
         result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = result.getText().toString();
+                String message = getResources().getString(R.string.thanks);
                 Intent intent = new Intent();
                 intent.putExtra("MESSAGE", message);
                 setResult(1, intent);
@@ -123,6 +123,7 @@ public class MediaPipeActivity extends BasicActivity {
         }
         return multiHandLandmarksStr;
     }
+
     /**
      * When the back button is pressed, we return the message "Back" to the menu
      * and close the activity.
@@ -130,7 +131,7 @@ public class MediaPipeActivity extends BasicActivity {
     @Override
     public void onBackPressed() {
         Intent backIntent = new Intent();
-        backIntent.putExtra("MESSAGE", "Back");
+        backIntent.putExtra("MESSAGE", getResources().getString(R.string.thanks));
         setResult(1, backIntent);
         finish();
     }
