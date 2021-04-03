@@ -26,24 +26,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textColor="@color/colorAccent"
-        android:textSize="40sp" />
-
-    <TextView
-        android:id="@+id/move_gesture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="40sp" />
+        android:textSize="40sp"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/resultString"
         android:layout_width="match_parent"
-        android:layout_height="182dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:gravity="bottom" />
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="50dp"
+        android:gravity="center_horizontal" />
 
 
 </RelativeLayout>

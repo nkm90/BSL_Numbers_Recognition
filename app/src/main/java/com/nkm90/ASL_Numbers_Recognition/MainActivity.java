@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d("ActivityLifeCycle", "Main Activity - onSaveInstanceState()");
+        Log.d("ActivityLifeCycle", "Main Activity - SaveInstanceState");
     }
 
     @Override
