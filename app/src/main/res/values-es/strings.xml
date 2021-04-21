@@ -3,7 +3,7 @@
     <string name="no_camera_access">Por favor, autorice el acceso a la camara</string>
     <string name="launchMP">Iniciar el reconocedor de manos</string>
     <string name="changeLang">Cambiar idioma</string>
-    <string name="out_message">Presiona el boton de Iniciar para obtener el mensaje utilizando el reconocedor de signos</string>
+    <string name="out_message">Presiona el boton de Iniciar para lanzar el reconocedor de gestos para LSA</string>
     <string name="one">Uno</string>
     <string name="two">Dos</string>
     <string name="three">Tres</string>

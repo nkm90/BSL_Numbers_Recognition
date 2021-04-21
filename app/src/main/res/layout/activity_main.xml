@@ -4,39 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="5dp"
+        android:width="150dp"
+        android:height="200dp"
+        android:fontFamily="serif-monospace"
+        android:gravity="left"
         android:text="@string/out_message"
+        android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLaunch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-    android:id="@+id/btnLaunch"
-    android:layout_width="202dp"
-    android:layout_height="200sp"
-    android:gravity="center"
-    android:text="@string/launchMP"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/btnLaunch"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:text="@string/launchMP"
+        android:background="@mipmap/icon_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result"
+        app:layout_constraintEnd_toStartOf="@id/btnLangChange"/>
 
     <Button
         android:id="@+id/btnLangChange"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:text="@string/changeLang"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLaunch" />
+        app:layout_constraintStart_toEndOf="@id/btnLaunch"
+        app:layout_constraintTop_toBottomOf="@+id/result" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
