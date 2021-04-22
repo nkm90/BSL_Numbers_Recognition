@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_camera_access">Please, provide permissions to use the camera</string>
-    <string name="launchMP">Start hand tracker</string>
+    <string name="launchMP">Start hand gesture recogniser</string>
     <string name="changeLang">Change language</string>
-    <string name="out_message">Press Start  button to obtain a message using Hand recognition</string>
+    <string name="out_message">Press Start  button to launch the ASL numbers gesture recognition</string>
     <string name="one">One</string>
     <string name="two">Two</string>
     <string name="three">Three</string>
@@ -15,4 +15,5 @@
     <string name="nine">Nine</string>
     <string name="thanks">Thanks for testing my app</string>
     <string name="noHands" >No hand found</string>
+    <string name="tittle">ASL Numbers Recognition</string>
 </resources>

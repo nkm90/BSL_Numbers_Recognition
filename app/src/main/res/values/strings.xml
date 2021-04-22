@@ -2,9 +2,9 @@
     <string name="app_name" translatable="false">ASL Numbers Recognition</string>
 
     <string name="no_camera_access">Please grant camera permissions.</string>
-    <string name="launchMP">Launch Mediapipe</string>
+    <string name="launchMP">START</string>
     <string name="changeLang">Change Language</string>
-    <string name="out_message">Run MP for recognition</string>
+    <string name="out_message">Press Start  button to launch the ASL numbers gesture recognition</string>
     <string name="one">ONE</string>
     <string name="two">TWO</string>
     <string name="three">THREE</string>
@@ -16,4 +16,5 @@
     <string name="nine">NINE</string>
     <string name="thanks">Thanks for testing my app</string>
     <string name="noHands" >No Hand found</string>
+    <string name="tittle">ASL Numbers Recognition</string>
 </resources>
