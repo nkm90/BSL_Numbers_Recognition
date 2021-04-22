@@ -15,4 +15,5 @@
     <string name="nine">Nueve</string>
     <string name="thanks">Gracias por usar my app</string>
     <string name="noHands" >Ninguna mano detectada</string>
+    <string name="tittle">LSA reconocimiento numeros</string>
 </resources>

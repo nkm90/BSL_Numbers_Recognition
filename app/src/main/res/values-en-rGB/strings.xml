@@ -15,4 +15,5 @@
     <string name="nine">Nine</string>
     <string name="thanks">Thanks for testing my app</string>
     <string name="noHands" >No hand found</string>
+    <string name="tittle">ASL Numbers Recognition</string>
 </resources>

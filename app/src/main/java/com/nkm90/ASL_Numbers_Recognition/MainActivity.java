@@ -11,16 +11,18 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnLaunch;
-    private Button btnLangChang;
+    private ImageButton btnLaunch;
+    private ImageButton btnLangChang;
     public TextView resultView;
 
     @Override
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode==1){
             String message = data.getStringExtra("MESSAGE");
             resultView.setText(message);
+            resultView.setGravity(Gravity.BOTTOM);
         }
     }
 
