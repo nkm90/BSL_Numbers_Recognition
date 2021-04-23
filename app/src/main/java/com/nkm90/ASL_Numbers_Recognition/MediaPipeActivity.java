@@ -68,7 +68,8 @@ public class MediaPipeActivity extends BasicActivity {
 
         // keep screen on
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        // the requested orientation forces the app to be displayed on portrait only
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         processor.addPacketCallback(
