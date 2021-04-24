@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
      * The setLocale method takes a String with the language to be set on the default
      * language for the Locale class. I also get saved into the shared preferences of
      * the app, ready to be used on the others activities if needed.
-     * @param lang
+     * @param lang String with the language code
      */
     private void setLocale(String lang) {
         Locale locale = new Locale(lang);
