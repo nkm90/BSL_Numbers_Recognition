@@ -21,9 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-
 import com.nkm90.ASL_Numbers_Recognition.basic.BasicActivity;
-import com.google.mediapipe.formats.proto.LandmarkProto;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
 import com.google.mediapipe.framework.PacketGetter;
@@ -50,27 +48,25 @@ public class MediaPipeActivity extends BasicActivity {
         result = findViewById(R.id.resultString);
         timestamp = System.currentTimeMillis();
 
-        /**
+        /*
          * When the result TextView area is pressed, the String thanks is stored
          * as message, passed back to the onActivityResult, and closing the
          * current Activity
          */
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = getResources().getString(R.string.thanks);
-                Intent intent = new Intent();
-                intent.putExtra("MESSAGE", message);
-                setResult(1, intent);
-                finish();
-            }
+        result.setOnClickListener(v -> {
+            String message = getResources().getString(R.string.thanks);
+            Intent intent = new Intent();
+            intent.putExtra("MESSAGE", message);
+            setResult(1, intent);
+            finish();
         });
 
-        // keep screen on
+        // keep screen on and the orientation to portrait
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
+        // Frame processor received from the basicActivity of MediaPipe library
         processor.addPacketCallback(
                 OUTPUT_LANDMARKS_STREAM_NAME,
                 (packet) -> {
@@ -78,15 +74,13 @@ public class MediaPipeActivity extends BasicActivity {
                     multiHandLandmarks =
                             PacketGetter.getProtoVector(packet, NormalizedLandmarkList.parser());
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            gesture.setText(handGestureCalculator(multiHandLandmarks));
-                            String letter = handGestureCalculator(multiHandLandmarks);
-                            if (timestamp + 2000 < System.currentTimeMillis() && !letter.equals(getResources().getString(R.string.noHands)) && !letter.equals("no gesture")){
-                                result.setText(letter);
-                                timestamp = System.currentTimeMillis();
-                            }
+                    runOnUiThread(() -> {
+                        gesture.setText(handGestureCalculator(multiHandLandmarks)); //display gesture on top
+                        String number = handGestureCalculator(multiHandLandmarks); //set the gesture as a String to be used
+                        // Adding timestamp to add the number to the bottom, it will help with building sentences with the results when needed
+                        if (timestamp + 2000 < System.currentTimeMillis() && !number.equals(getResources().getString(R.string.noHands)) && !number.equals("no gesture")){
+                            result.setText(number);
+                            timestamp = System.currentTimeMillis();
                         }
                     });
                     Log.d(
@@ -103,8 +97,8 @@ public class MediaPipeActivity extends BasicActivity {
      * debugger, keeping track of the different points positions obtained from the multiHandLandmarks
      * of MediaPipe.
      *
-     * @param multiHandLandmarks
-     * @return the list of points with their respective X, Y and Z positions for each hand recognised
+     * @param multiHandLandmarks list on inputs with the different points positions obtained from MediaPipe
+     * @return a String with the points and their respective X, Y and Z positions for each hand recognised
      */
     private String getMultiHandLandmarksDebugString(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
@@ -146,6 +140,13 @@ public class MediaPipeActivity extends BasicActivity {
         finish();
     }
 
+    /**
+     * The handGestureCalculator method takes the different position of the points obtained from
+     * MediaPipe in post to return a string that contains the number for that gesture.
+     *
+     * @param multiHandLandmarks array of normalised landmarks points obtained from MediaPipe
+     * @return String value with the number for the recognised sign
+     */
     private String handGestureCalculator(List<NormalizedLandmarkList> multiHandLandmarks) {
         if (multiHandLandmarks.isEmpty()) {
             return getResources().getString(R.string.noHands);
