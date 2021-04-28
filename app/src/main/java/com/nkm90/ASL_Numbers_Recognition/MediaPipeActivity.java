@@ -74,13 +74,16 @@ public class MediaPipeActivity extends BasicActivity {
                     multiHandLandmarks =
                             PacketGetter.getProtoVector(packet, NormalizedLandmarkList.parser());
 
-                    runOnUiThread(() -> {
-                        gesture.setText(handGestureCalculator(multiHandLandmarks)); //display gesture on top
-                        String number = handGestureCalculator(multiHandLandmarks); //set the gesture as a String to be used
-                        // Adding timestamp to add the number to the bottom, it will help with building sentences with the results when needed
-                        if (timestamp + 2000 < System.currentTimeMillis() && !number.equals(getResources().getString(R.string.noHands)) && !number.equals("no gesture")){
-                            result.setText(number);
-                            timestamp = System.currentTimeMillis();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            gesture.setText(handGestureCalculator(multiHandLandmarks)); //display gesture on top
+                            String number = handGestureCalculator(multiHandLandmarks); //set the gesture as a String to be used
+                            // Adding timestamp to add the number to the bottom, it will help with building sentences with the results when needed
+                            if (timestamp + 2000 < System.currentTimeMillis() && !number.equals(getResources().getString(R.string.noHands)) && !number.equals("no gesture")){
+                                result.setText(number);
+                                timestamp = System.currentTimeMillis();
+                            }
                         }
                     });
                     Log.d(
@@ -244,7 +247,10 @@ public class MediaPipeActivity extends BasicActivity {
                     return getResources().getString(R.string.six);
                 }
             } else if (thumbIsBend){
-                if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
+                if (indexStraightDown && middleStraightDown && ringStraightDown && pinkyStraightDown){
+                    return getResources().getString(R.string.zero);
+                }
+                else if (indexStraightUp && middleStraightDown && ringStraightDown && pinkyStraightDown){
                     return getResources().getString(R.string.one);
                 }else if (indexStraightUp && middleStraightUp && ringStraightDown && pinkyStraightDown){
                     return getResources().getString(R.string.two);
@@ -262,7 +268,7 @@ public class MediaPipeActivity extends BasicActivity {
                         + ", ringStraightUp " + ringStraightUp + ", ringStraightDown " + ringStraightDown
                         + ", pinkyStraightUp " + pinkyStraightUp + ", pinkyStraightDown " + pinkyStraightDown;
                 Log.d(TAG, "handGestureCalculator: == " + info);
-                return " "; // nothing is displayed on the screen
+                return ""; // nothing is displayed on the screen
             }
         }
         return " "; // nothing is displayed on the screen
@@ -284,8 +290,9 @@ public class MediaPipeActivity extends BasicActivity {
     }
 
     /**
-     * This method calculates the angle between 3 given points (A,B,C) using the angle between vectors
-     * formula. The vector 1 is made with points AB and vector 2 is made with points BC, being point B
+     * This method calculates the angle between 3 given points (A,B,C)
+     * using the angle between vectors formula. The vector 1 is made
+     * with points AB and vector 2 is made with points BC, being point B
      * the vertex.
      *
      * @param a_x Value of X for the given position of A
@@ -296,7 +303,9 @@ public class MediaPipeActivity extends BasicActivity {
      * @param c_y Value of Y for the given position of C
      * @return Angle in radians
      */
-    private double getAngleABC(double a_x, double a_y, double b_x, double b_y, double c_x, double c_y) {
+    private double getAngleABC(double a_x, double a_y,
+                               double b_x, double b_y,
+                               double c_x, double c_y) {
         double ab_x = b_x - a_x;
         double ab_y = b_y - a_y;
         double cb_x = b_x - c_x;
@@ -315,56 +324,5 @@ public class MediaPipeActivity extends BasicActivity {
      */
     private int radianToDegree(double radian) {
         return (int) Math.floor(radian * 180. / Math.PI + 0.5);
-    }
-
-    /*LIFECYCLE INTEGRATION
-    * With the aim of keeping track of the different states that this activity is changing.
-    * I just basically logs a message to the console as no other function is needed in this case*/
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - SaveInstanceState");
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Start");
-    }
-
-    @Override
-    protected void onRestart()
-    {
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Restart");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResume()
-    {
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Resume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause()
-    {
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Pause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop()
-    {
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Stop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy()
-    {
-        Log.d("ActivityLifeCycle", "MediaPipe Activity - Destroy");
-        super.onDestroy();
     }
 }

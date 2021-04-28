@@ -17,4 +17,5 @@
     <string name="thanks">Thanks for testing my app</string>
     <string name="noHands" >No Hand found</string>
     <string name="tittle">ASL Numbers Recognition</string>
+    <string name="zero">Zero</string>
 </resources>
