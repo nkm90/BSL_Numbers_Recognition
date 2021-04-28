@@ -45,7 +45,7 @@ public class BasicActivity extends AppCompatActivity {
   // to be processed in a MediaPipe graph, and flips the processed frames back when they are
   // displayed. This maybe needed because OpenGL represents images assuming the image origin is at
   // the bottom-left corner, whereas MediaPipe in general assumes the image origin is at the
-  // top-left corner.
+  // top-right corner.
   // NOTE: use "flipFramesVertically" in manifest metadata to override this behavior.
   private static final boolean FLIP_FRAMES_VERTICALLY = true;
 
@@ -115,8 +115,33 @@ public class BasicActivity extends AppCompatActivity {
     PermissionHelper.checkAndRequestCameraPermissions(this);
   }
 
+  /*LIFECYCLE INTEGRATION
+   * With the aim of keeping track of the different states that MediaPipe activity is changing.
+   * Logging a message to the console every time a new state is reached, helping to keep track of
+   * the lifecycle for the app*/
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - SaveInstanceState");
+  }
+
+  @Override
+  protected void onStart()
+  {
+    super.onStart();
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Start");
+  }
+
+  @Override
+  protected void onRestart()
+  {
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Restart");
+    super.onRestart();
+  }
+
   @Override
   protected void onResume() {
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Resume");
     super.onResume();
     converter = new ExternalTextureConverter(eglManager.getContext());
     converter.setFlipY(
@@ -129,8 +154,23 @@ public class BasicActivity extends AppCompatActivity {
 
   @Override
   protected void onPause() {
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Pause");
     super.onPause();
-    converter.close();
+    //converter.close();
+  }
+
+  @Override
+  protected void onStop()
+  {
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Stop");
+    super.onStop();
+  }
+
+  @Override
+  protected void onDestroy()
+  {
+    Log.d("ActivityLifeCycle", "MediaPipe Activity - Destroy");
+    super.onDestroy();
   }
 
   @Override
