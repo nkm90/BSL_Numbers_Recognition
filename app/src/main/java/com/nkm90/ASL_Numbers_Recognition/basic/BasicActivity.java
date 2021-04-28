@@ -48,6 +48,7 @@ public class BasicActivity extends AppCompatActivity {
   // top-right corner.
   // NOTE: use "flipFramesVertically" in manifest metadata to override this behavior.
   private static final boolean FLIP_FRAMES_VERTICALLY = true;
+  boolean first = true;
 
   static {
     // Load all native libraries needed by the app.
@@ -201,8 +202,11 @@ public class BasicActivity extends AppCompatActivity {
         applicationInfo.metaData.getBoolean("cameraFacingFront", false)
             ? CameraHelper.CameraFacing.FRONT
             : CameraHelper.CameraFacing.BACK;
-    cameraHelper.startCamera(
-        this, cameraFacing, /*surfaceTexture=*/ null, cameraTargetResolution());
+    if (first)
+    {
+      first = false;
+      cameraHelper.startCamera(this, cameraFacing, /*surfaceTexture=*/ null, cameraTargetResolution());
+    }
   }
 
   protected Size computeViewSize(int width, int height) {
