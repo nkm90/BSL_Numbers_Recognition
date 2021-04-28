@@ -1,4 +1,4 @@
-package com.nkm90.ASL_Numbers_Recognition;
+package com.nkm90.BSL_Numbers_Recognition;
 
 import android.content.Context;
 

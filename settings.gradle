@@ -1,2 +1,2 @@
-rootProject.name='ASL_Numbers_Recognition'
+rootProject.name='BSL_Numbers_Recognition'
 include ':app'

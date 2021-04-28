@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.nkm90.ASL_Numbers_Recognition;
+package com.nkm90.BSL_Numbers_Recognition;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
-import com.nkm90.ASL_Numbers_Recognition.basic.BasicActivity;
+import com.nkm90.BSL_Numbers_Recognition.basic.BasicActivity;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
 import com.google.mediapipe.framework.PacketGetter;
