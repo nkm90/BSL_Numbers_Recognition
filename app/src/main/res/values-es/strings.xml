@@ -3,7 +3,7 @@
     <string name="no_camera_access">Por favor, autorice el acceso a la camara</string>
     <string name="launchMP">Iniciar el reconocedor de manos</string>
     <string name="changeLang">Cambiar idioma</string>
-    <string name="out_message">Presiona el boton de Iniciar para lanzar el reconocedor de gestos para LSI</string>
+    <string name="out_message">Presiona en Start para lanzar el reconocedor de gestos para Lengua de Signos Britanica</string>
     <string name="one">Uno</string>
     <string name="two">Dos</string>
     <string name="three">Tres</string>
@@ -15,6 +15,6 @@
     <string name="nine">Nueve</string>
     <string name="thanks">Gracias por usar my app</string>
     <string name="noHands" >Ninguna mano detectada</string>
-    <string name="tittle">LSI reconocimiento numeros</string>
+    <string name="tittle">LSB reconocimiento numeros</string>
     <string name="zero">Cero</string>
 </resources>
